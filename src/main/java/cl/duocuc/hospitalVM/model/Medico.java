@@ -1,36 +1,32 @@
 package cl.duocuc.hospitalVM.model;
- 
-import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "pacientes")
 @Data
-@NoArgsConstructor
+@Entity
+@Table(name = "medicos")
 @AllArgsConstructor
-public class Paciente 
-{   
+@NoArgsConstructor
+public class Medico
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 10, name = "id_paciente")
-    private Long idPaciente;
+    @Column(name = "id_medico", length = 10)
+    private Long id;
 
-    @Column(nullable = false, unique = true, length = 8)
-    private Long numRun;
+    @Column(nullable = false, length = 8)
+    private Long run;
 
-    @Column(nullable = false, length = 1)
-    private String dv;
+    @Column(nullable = false)
+    private char dv;
 
     @Column(nullable = false, length = 50)
     private String pnombre;
@@ -43,14 +39,20 @@ public class Paciente
 
     @Column(nullable = false, length = 50)
     private String amaterno;
+    
+    @Column(nullable = false)
+    private Especialidad especialidad;
 
-    @Column(nullable= false,name = "fecha_nacimiento")
-    private LocalDate fechaNacimiento;
+    @Column(nullable = false, name = "jefe_turno")
+    private char jefeTurno;
 
-    @Column(nullable = true, length = 100)
-    private String correo;
+    enum Especialidad {
+        PEDIATRIA,
+        GENERAL,
+        ONCOLOGIA,
+        CIRUJANO,
+        OFTAMOLOGIA,
+        OTORRINOLARINGOLOGIA
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "id_tipo_paciente")
-    private TipoPaciente tipoPaciente;
 }
